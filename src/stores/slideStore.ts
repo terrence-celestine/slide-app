@@ -64,7 +64,6 @@ export const useSlideStore = create(temporal<SlideStore>((set) => ({
         return { slides: updatedSlides as Slide[] }
       }),
       addElement: (slideIndex, element) => set((state) => {
-        console.log('addElement', slideIndex, element)
         if (slideIndex < 0 || slideIndex >= state.slides.length) return state
         const updatedSlides = state.slides.map((s, i) =>
           i === slideIndex ? { ...s, elements: [...s.elements, element] } : s
