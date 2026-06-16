@@ -15,7 +15,7 @@ const CanvasElement = ({element, canvasWidth, canvasHeight, readonly = false}: {
     return (
         <Rnd
         style={{ height: "100%", overflow: "hidden" }}
-        onClick={(e) => {
+        onClick={(e: React.MouseEvent<HTMLDivElement>) => {
             e.stopPropagation()
             setSelectedElementId(element.id)
         }}
