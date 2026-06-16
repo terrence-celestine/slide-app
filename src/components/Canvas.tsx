@@ -17,7 +17,7 @@ const Canvas = () => {
   if (!activeSlide) return <div className="flex-1 flex items-center justify-center">No slides</div>
 
     return (
-      <div ref={containerRef} className="flex-1 flex items-center justify-center bg-white">
+      <div ref={containerRef} className="flex-1 flex items-center justify-center bg-zinc-100">
         <div 
         ref={canvasRef}
         style={{

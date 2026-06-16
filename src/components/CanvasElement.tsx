@@ -10,19 +10,19 @@ const CanvasElement = ({element, canvasWidth, canvasHeight}: {element: SlideElem
     const updateElement = useSlideStore((state) => state.updateElement);
     const activeSlideId = useSlideStore((state) => state.currentSlide);
     const [isEditing, setIsEditing] = useState(false);
-    const [isSelected, setIsSelected] = useState(false);
+    const [_, setIsSelected] = useState(false);
     const setSelectedElementId = useSlideStore((state) => state.setSelectedElementId)
 
     return (
         <Rnd
-        style={{ height: "100%", overflow: "hidden"}}
+        style={{ height: "100%", overflow: "hidden" }}
         onClick={() => {
             setIsSelected(true)
             setSelectedElementId(element.id)
         }}
         onDoubleClick={() => setIsEditing(true)}
         disableDragging={isEditing}
-        onResizeStop={(e, direction, ref, delta, position) => {
+        onResizeStop={(_e, _direction, ref, _delta, position) => {
             updateElement(activeSlideId, element.id, {
               x: (position.x / canvasWidth) * 100,
               y: (position.y / canvasHeight) * 100,

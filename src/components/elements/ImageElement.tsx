@@ -6,11 +6,10 @@ const ImageElementComponent = ({ element, onImageChange }: {
   }) => {
     if (!element.image) {
       return (
-        <div style={{ width: '100%', height: '100%', background: '#e5e7eb', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: 8 }}>
-          <p style={{ fontSize: 12, color: '#6b7280' }}>Enter image URL</p>
+        <div style={{ width: '100%', height: '100%', background: 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: 8, border: '1px dashed #d1d5db', borderRadius: 4 }}>
           <input
             type="text"
-            placeholder="https://..."
+            placeholder="Enter image URL"
             onKeyDown={(e) => {
                 e.stopPropagation()
               if (e.key === 'Enter') {
@@ -18,7 +17,7 @@ const ImageElementComponent = ({ element, onImageChange }: {
               }
             }}
             onClick={(e) => e.stopPropagation()}
-            style={{ fontSize: 12, padding: '4px 8px', width: '80%', border: '1px solid #d1d5db', borderRadius: 4 }}
+            style={{ fontSize: 12, padding: '4px 8px', width: '80%', border: '1px solid #d1d5db', borderRadius: 4, color: "#000" }}
           />
         </div>
       )

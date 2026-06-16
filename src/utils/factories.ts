@@ -7,7 +7,8 @@ const createSlide = (): Slide => {
     return {
         id: nanoid(),
         elements: [createTextElement()],
-        background: '#FFFFFF'
+        background: '#FFFFFF',
+        name: 'Untitled Slide'
     }
 }
 
@@ -16,8 +17,8 @@ const createTextElement = (): TextElement => {
         id: nanoid(),
         x: 25 + randomOffset(),
         y: 25 + randomOffset(),
-        width: 50,
-        height: 50,
+        width: 10,
+        height: 10,
         zIndex: 0,
         opacity: 1,
         type: 'text',

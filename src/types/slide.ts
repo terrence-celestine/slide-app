@@ -29,6 +29,7 @@ type Slide = {
     id: string;
     elements: SlideElement[];
     background: string;
+    name: string;
 }
 type Presentation = {
     id: string;

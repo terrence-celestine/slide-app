@@ -18,12 +18,12 @@ const App = () => {
   useKeyboard()
   useAutoSave()
     return (
-      <div className="h-screen w-screen flex flex-col">
+      <div className="h-screen w-screen flex flex-col bg-[#1a1a2e] text-gray-200">
         <Toolbar />
         <div className="flex flex-1 overflow-hidden">
-          <SlidePanel />   {/* w-48 */}
-          <Canvas />       {/* flex-1 */}
-          <PropertiesPanel /> {/* w-48 or w-64 */}
+          <SlidePanel />   
+          <Canvas />       
+          <PropertiesPanel />
         </div>
       </div>
     )

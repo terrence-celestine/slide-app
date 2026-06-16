@@ -22,6 +22,9 @@ type SlideStore = {
     deleteElement: (slideIndex: number, elementId: string) => void;
     updateElementZIndex: (slideIndex: number, elementId: string, direction: 'forward' | 'backward' | 'front' | 'back') => void;
     loadFromLocalStorage: () => void;
+    loadPresentation: (slides: Slide[]) => void;
+    presentationName: string
+    setPresentationName: (name: string) => void;
 }
 
 export const useSlideStore = create(temporal<SlideStore>((set) => ({
@@ -111,7 +114,10 @@ export const useSlideStore = create(temporal<SlideStore>((set) => ({
             console.error('failed to load from localStorage', e)
             return {}
           }
-        })
+        }),
+        loadPresentation: (slides: Slide[]) => set({ slides }),
+        presentationName: 'Untitled Presentation',
+        setPresentationName: (name: string) => set({ presentationName: name })
 }), {
   partialize: (state) => ({ slides: state.slides }) as unknown as SlideStore
 }))
