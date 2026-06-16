@@ -8,6 +8,9 @@ const useKeyboard = () => {
   const setSelectedElementId = useSlideStore((state) => state.setSelectedElementId)
   const currentSlide = useSlideStore((state) => state.currentSlide)
   const { undo, redo } = useStore(useSlideStore.temporal)
+  const previousSlide = useSlideStore((state) => state.previousSlide)
+
+  const nextSlide = useSlideStore((state) => state.nextSlide)
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -31,6 +34,16 @@ const useKeyboard = () => {
 
       if (e.key === 'Escape') {
         setSelectedElementId(null)
+      }
+
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault()
+        previousSlide()
+      }
+
+      if (e.key === 'ArrowRight') {
+        e.preventDefault()
+        nextSlide()
       }
     }
 
