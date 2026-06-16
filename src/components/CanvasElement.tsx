@@ -6,7 +6,7 @@ import { Rnd } from "react-rnd";
 import { useSlideStore } from "../stores/slideStore";
 import { useState } from "react";
 
-const CanvasElement = ({element, canvasWidth, canvasHeight}: {element: SlideElement, canvasWidth: number, canvasHeight: number}) => {
+const CanvasElement = ({element, canvasWidth, canvasHeight, readonly = false}: {element: SlideElement, canvasWidth: number, canvasHeight: number, readonly?: boolean}) => {
     const updateElement = useSlideStore((state) => state.updateElement);
     const activeSlideId = useSlideStore((state) => state.currentSlide);
     const [isEditing, setIsEditing] = useState(false);
@@ -19,8 +19,9 @@ const CanvasElement = ({element, canvasWidth, canvasHeight}: {element: SlideElem
             e.stopPropagation()
             setSelectedElementId(element.id)
         }}
+        disableDragging={isEditing || readonly}
+        enableResizing={readonly ? false : undefined }
         onDoubleClick={() => setIsEditing(true)}
-        disableDragging={isEditing}
         onResizeStop={(_e, _direction, ref, _delta, position) => {
             updateElement(activeSlideId, element.id, {
               x: (position.x / canvasWidth) * 100,
@@ -46,7 +47,7 @@ const CanvasElement = ({element, canvasWidth, canvasHeight}: {element: SlideElem
         bounds="parent"
       >
         <div style={{ width: '100%', height: '100%' }}
-        className={`${selectedElementId === element.id ? 'border-2 border-blue-500 rounded-md' : ''} hover:border-2 hover:border-blue-500 rounded-md hover:cursor-pointer`}
+       className={`${!readonly && selectedElementId === element.id ? 'border-2 border-blue-500 rounded-md' : ''} ${!readonly ? 'hover:border-2 hover:border-blue-500 hover:cursor-pointer' : ''} rounded-md`}
         >
             {element.type === 'text' && <TextElementComponent element={element} isEditing={isEditing} onTextChange={(text) => {updateElement(activeSlideId, element.id, { text }); setIsEditing(false)}} />}
             {element.type === 'image' && <ImageElementComponent element={element} onImageChange={(url) => updateElement(activeSlideId, element.id, { image: url })} />}

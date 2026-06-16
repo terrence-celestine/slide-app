@@ -26,6 +26,8 @@ type SlideStore = {
     presentationName: string
     setPresentationName: (name: string) => void;
     updateSlideNotes: (slideIndex: number, notes: string) => void;
+    presentationMode: boolean;
+    setPresentationMode: (mode: boolean) => void;
 }
 
 export const useSlideStore = create(temporal<SlideStore>((set) => ({
@@ -127,7 +129,9 @@ export const useSlideStore = create(temporal<SlideStore>((set) => ({
             i === slideIndex ? { ...s, notes } : s
           )
           return { slides: updatedSlides }
-        })
+        }),
+        presentationMode: false,
+        setPresentationMode: (mode: boolean) => set({ presentationMode: mode })
 }), {
   partialize: (state) => ({ slides: state.slides }) as unknown as SlideStore
 }))

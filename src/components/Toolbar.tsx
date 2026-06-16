@@ -1,7 +1,7 @@
 import { useStore } from "zustand";
 import { useSlideStore } from "../stores/slideStore";
 import { createTextElement, createImageElement, createShapeElement } from "../utils/factories";
-import { Type, Image, Shapes, Undo2, Redo2, Download, MonitorPlay } from "lucide-react";
+import { Type, Image, Shapes, Undo2, Redo2, Download, MonitorPlay, Play } from "lucide-react";
 import { useRef } from "react"
 import { Upload } from "lucide-react"
 
@@ -15,7 +15,8 @@ const Toolbar = () => {
     const fileInputRef = useRef<HTMLInputElement>(null)
     const presentationName = useSlideStore((state) => state.presentationName)
     const setPresentationName = useSlideStore((state) => state.setPresentationName)
-    
+    const setPresentationMode = useSlideStore((state) => state.setPresentationMode)
+
     const exportJSON = () => {
       const json = JSON.stringify(slides, null, 2)
       const blob = new Blob([json], { type: 'application/json' })
@@ -44,6 +45,10 @@ const Toolbar = () => {
       e.target.value = ''
     }
 
+
+  const handlePresentationMode = () => {
+    setPresentationMode(true)
+  }
 
     return (
       <div className="h-11 bg-white border-b border-zinc-200 flex items-center px-3 gap-2 shrink-0">
@@ -98,7 +103,6 @@ const Toolbar = () => {
             placeholder="Untitled Presentation"
           />
         </div>
-
         <div className="ml-auto">
         <input
           ref={fileInputRef}
@@ -108,6 +112,10 @@ const Toolbar = () => {
           className="hidden"
         />
         <div className="flex items-center gap-1.5">
+        <button onClick={handlePresentationMode} className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium transition-colors cursor-pointer">
+          <Play size={13} />
+          Presentation Mode
+        </button>
         <button
           onClick={() => fileInputRef.current?.click()}
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-zinc-200 hover:bg-zinc-50 text-zinc-600 text-xs font-medium transition-colors cursor-pointer"
