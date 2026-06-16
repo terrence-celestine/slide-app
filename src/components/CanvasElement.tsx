@@ -10,14 +10,14 @@ const CanvasElement = ({element, canvasWidth, canvasHeight}: {element: SlideElem
     const updateElement = useSlideStore((state) => state.updateElement);
     const activeSlideId = useSlideStore((state) => state.currentSlide);
     const [isEditing, setIsEditing] = useState(false);
-    const [_, setIsSelected] = useState(false);
     const setSelectedElementId = useSlideStore((state) => state.setSelectedElementId)
+    const selectedElementId = useSlideStore((state) => state.selectedElementId)  
 
     return (
         <Rnd
         style={{ height: "100%", overflow: "hidden" }}
-        onClick={() => {
-            setIsSelected(true)
+        onClick={(e) => {
+            e.stopPropagation()
             setSelectedElementId(element.id)
         }}
         onDoubleClick={() => setIsEditing(true)}
@@ -46,11 +46,13 @@ const CanvasElement = ({element, canvasWidth, canvasHeight}: {element: SlideElem
         }}
         bounds="parent"
       >
-        <div style={{ width: '100%', height: '100%' }}>
+        <div style={{ width: '100%', height: '100%' }}
+        className={`${selectedElementId === element.id ? 'border-2 border-blue-500 rounded-md' : ''} hover:border-2 hover:border-blue-500 rounded-md hover:cursor-pointer`}
+        >
             {element.type === 'text' && <TextElementComponent element={element} isEditing={isEditing} onTextChange={(text) => {updateElement(activeSlideId, element.id, { text }); setIsEditing(false)}} />}
             {element.type === 'image' && <ImageElementComponent element={element} onImageChange={(url) => updateElement(activeSlideId, element.id, { image: url })} />}
             {element.type === 'shape' && <ShapeElementComponent element={element} />}
-            </div>
+        </div>
         </Rnd>
     )
 }

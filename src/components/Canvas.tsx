@@ -6,6 +6,7 @@ import { useRef } from "react";
 const Canvas = () => {
   const currentSlide = useSlideStore((state) => state.currentSlide);
   const slides = useSlideStore((state) => state.slides);
+  const setSelectedElementId = useSlideStore((state) => state.setSelectedElementId)
   const activeSlide = slides[currentSlide];
   const SLIDE_WIDTH = 960
   const SLIDE_HEIGHT = 540
@@ -17,7 +18,7 @@ const Canvas = () => {
   if (!activeSlide) return <div className="flex-1 flex items-center justify-center">No slides</div>
 
     return (
-      <div ref={containerRef} className="flex-1 flex items-center justify-center bg-zinc-100">
+      <div ref={containerRef} className="flex-1 flex items-center justify-center bg-zinc-100" onClick={() => setSelectedElementId(null)}>
         <div 
         ref={canvasRef}
         style={{
