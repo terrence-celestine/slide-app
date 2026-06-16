@@ -1,73 +1,123 @@
-# React + TypeScript + Vite
+# SlideSync
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A fast, local-first slide editor built with React and Vite. Create, design, and present slides entirely in the browser — no account, no backend, no friction.
 
-Currently, two official plugins are available:
+![SlideSync](https://slide-odw1y116n-terrence-celestines-projects.vercel.app/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+- **Slide editor** — create, rename, reorder, and delete slides with a drag-and-drop panel
+- **Canvas elements** — add text, images, and shapes to a 16:9 canvas
+- **Drag & resize** — move and resize elements freely with handles
+- **Text editing** — double-click any text element to edit in place
+- **Formatting controls** — font size, family, weight, color, and shape fill via a properties panel
+- **Z-order controls** — bring elements forward, send them back, or jump to front/back
+- **Undo/redo** — full history with Ctrl+Z / Ctrl+Y
+- **Keyboard shortcuts** — Delete to remove, Escape to deselect, arrow keys to navigate
+- **Auto-save** — presentations save to localStorage automatically
+- **Export/Import** — save your presentation as JSON and load it back anytime
+- **Presentation mode** — fullscreen view with arrow key navigation and a slide counter
+- **Speaker notes** — add per-slide notes visible in the editor
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech Stack
 
-## Expanding the ESLint configuration
+| Layer         | Technology                    |
+| ------------- | ----------------------------- |
+| Framework     | React 18 + TypeScript         |
+| Build tool    | Vite 5                        |
+| Styling       | Tailwind CSS v4               |
+| State         | Zustand 4 + zundo (undo/redo) |
+| Drag & resize | react-rnd                     |
+| Slide reorder | @dnd-kit                      |
+| Icons         | lucide-react                  |
+| Deployment    | Vercel                        |
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Getting Started
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+```bash
+# Clone the repo
+git clone https://github.com/your-username/slidesync.git
+cd slidesync
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+# Install dependencies
+npm install
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Start the dev server
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Open [http://localhost:5173](http://localhost:5173) in your browser.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Keyboard Shortcuts
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+| Key                    | Action                              |
+| ---------------------- | ----------------------------------- |
+| `Double click`         | Edit text element                   |
+| `Delete` / `Backspace` | Delete selected element             |
+| `Escape`               | Deselect element                    |
+| `Ctrl+Z`               | Undo                                |
+| `Ctrl+Y`               | Redo                                |
+| `Arrow keys`           | Navigate slides (presentation mode) |
+
+## Project Structure
+
 ```
+src/
+├── components/
+│   ├── editor/
+│   │   ├── Canvas.tsx           # 16:9 slide workspace
+│   │   ├── CanvasElement.tsx    # Drag/resize wrapper for elements
+│   │   ├── SlidePanel.tsx       # Left sidebar slide thumbnails
+│   │   ├── PropertiesPanel.tsx  # Right sidebar element/slide props
+│   │   ├── Toolbar.tsx          # Top bar with actions
+│   │   ├── SlideNotes.tsx       # Speaker notes panel
+│   │   └── PresentationView.tsx # Fullscreen presentation mode
+│   ├── elements/
+│   │   ├── TextElement.tsx
+│   │   ├── ImageElement.tsx
+│   │   └── ShapeElement.tsx
+│   └── properties/
+│       ├── ElementProperties.tsx
+│       ├── TextProperties.tsx
+│       ├── ShapeProperties.tsx
+│       └── SlideProperties.tsx
+├── store/
+│   └── slideStore.ts            # Zustand store — all state + actions
+├── types/
+│   └── slide.ts                 # TypeScript types
+├── hooks/
+│   ├── useAutoSave.ts           # Debounced localStorage save
+│   ├── useKeyboard.ts           # Global keyboard shortcuts
+│   └── useContainerScale.ts     # Canvas scaling via ResizeObserver
+└── utils/
+    └── factories.ts             # createSlide, createTextElement, etc.
+```
+
+## Roadmap
+
+### v2 — Polish
+
+- [ ] Live slide thumbnails
+- [ ] Right-click context menu
+- [ ] Snap to grid / alignment guides
+- [ ] Multi-select elements
+- [ ] Text alignment controls
+- [ ] Image file upload
+- [ ] Duplicate slide
+
+### v3 — Cloud
+
+- [ ] Auth (Google sign-in)
+- [ ] Cloud save via Supabase
+- [ ] Presentations dashboard
+- [ ] Share link (view only)
+- [ ] Real-time collaboration
+
+### v4 — Export
+
+- [ ] Export to PDF
+- [ ] Export to PPTX
+
+## License
+
+MIT
