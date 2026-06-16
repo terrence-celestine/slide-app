@@ -1,9 +1,7 @@
 import { useEffect, useRef } from "react";
 import type { TextElement } from "../../types/slide";
-import { useSlideStore } from "../../stores/slideStore";
 
 const TextElementComponent = ({element, isEditing, onTextChange}: {element: TextElement, isEditing: boolean, onTextChange: (text: string) => void}) => {
-  const selectedElementId = useSlideStore((state) => state.selectedElementId)
     const divRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {

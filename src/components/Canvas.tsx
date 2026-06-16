@@ -2,6 +2,7 @@ import { useSlideStore } from "../stores/slideStore";
 import useContainerScale from "../hooks/useContainerScale";
 import CanvasElement from "./CanvasElement";
 import { useRef } from "react";
+import SlideNotes from "./SlideNotes";
 
 const Canvas = () => {
   const currentSlide = useSlideStore((state) => state.currentSlide);
@@ -18,6 +19,7 @@ const Canvas = () => {
   if (!activeSlide) return <div className="flex-1 flex items-center justify-center">No slides</div>
 
     return (
+      <div className="flex flex-col flex-1">
       <div ref={containerRef} className="flex-1 flex items-center justify-center bg-zinc-100" onClick={() => setSelectedElementId(null)}>
         <div 
         ref={canvasRef}
@@ -33,6 +35,8 @@ const Canvas = () => {
                   <CanvasElement key={element.id} element={element} canvasWidth={SLIDE_WIDTH} canvasHeight={SLIDE_HEIGHT} />
                 ))}
           </div>
+      </div>
+      <SlideNotes />
       </div>
     )
   }

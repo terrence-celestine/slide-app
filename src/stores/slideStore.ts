@@ -25,6 +25,7 @@ type SlideStore = {
     loadPresentation: (slides: Slide[]) => void;
     presentationName: string
     setPresentationName: (name: string) => void;
+    updateSlideNotes: (slideIndex: number, notes: string) => void;
 }
 
 export const useSlideStore = create(temporal<SlideStore>((set) => ({
@@ -76,7 +77,6 @@ export const useSlideStore = create(temporal<SlideStore>((set) => ({
       selectedElementId: null,
       setSelectedElementId: (id) => {
         set({ selectedElementId: id })
-        console.log('selectedElementId:', id)
       },
       updateSlideBackground: (slideIndex, background) => set((state) => {
         if (slideIndex < 0 || slideIndex >= state.slides.length) return state
@@ -120,7 +120,14 @@ export const useSlideStore = create(temporal<SlideStore>((set) => ({
         }),
         loadPresentation: (slides: Slide[]) => set({ slides }),
         presentationName: 'Untitled Presentation',
-        setPresentationName: (name: string) => set({ presentationName: name })
+        setPresentationName: (name: string) => set({ presentationName: name }),
+        updateSlideNotes: (slideIndex, notes) => set((state) => {
+          if (slideIndex < 0 || slideIndex >= state.slides.length) return state
+          const updatedSlides = state.slides.map((s, i) =>
+            i === slideIndex ? { ...s, notes } : s
+          )
+          return { slides: updatedSlides }
+        })
 }), {
   partialize: (state) => ({ slides: state.slides }) as unknown as SlideStore
 }))

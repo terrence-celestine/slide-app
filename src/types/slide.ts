@@ -30,6 +30,7 @@ type Slide = {
     elements: SlideElement[];
     background: string;
     name: string;
+    notes?: string;
 }
 type Presentation = {
     id: string;

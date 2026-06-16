@@ -12,7 +12,6 @@ const CanvasElement = ({element, canvasWidth, canvasHeight}: {element: SlideElem
     const [isEditing, setIsEditing] = useState(false);
     const setSelectedElementId = useSlideStore((state) => state.setSelectedElementId)
     const selectedElementId = useSlideStore((state) => state.selectedElementId)  
-
     return (
         <Rnd
         style={{ height: "100%", overflow: "hidden" }}

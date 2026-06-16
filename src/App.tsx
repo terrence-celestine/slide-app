@@ -7,6 +7,7 @@ import useKeyboard from './hooks/useKeyboard'
 import useAutoSave from './hooks/useAutoSave'
 import { useSlideStore } from './stores/slideStore'
 import { useEffect } from 'react'
+import SlideNotes from './components/SlideNotes'
 
 const App = () => {
   const loadFromLocalStorage = useSlideStore((state) => state.loadFromLocalStorage)
@@ -20,9 +21,9 @@ const App = () => {
     return (
       <div className="h-screen w-screen flex flex-col bg-[#1a1a2e] text-gray-200">
         <Toolbar />
-        <div className="flex flex-1 overflow-hidden">
+        <div className="flex flex-1 overflow-hidden justify-between">
           <SlidePanel />   
-          <Canvas />       
+          <Canvas /> 
           <PropertiesPanel />
         </div>
       </div>
