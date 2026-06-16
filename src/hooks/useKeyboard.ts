@@ -36,12 +36,12 @@ const useKeyboard = () => {
         setSelectedElementId(null)
       }
 
-      if (e.key === 'ArrowLeft') {
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
         e.preventDefault()
         previousSlide()
       }
 
-      if (e.key === 'ArrowRight') {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
         e.preventDefault()
         nextSlide()
       }

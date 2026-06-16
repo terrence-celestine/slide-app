@@ -46,7 +46,7 @@ export const useSlideStore = create(temporal<SlideStore>((set) => ({
     }),
     setCurrentSlide: (index: number) => set({ currentSlide: index}),
     nextSlide: () => set((state) => {
-        if (state.currentSlide >= state.slides.length) return state;
+        if (state.currentSlide >= state.slides.length - 1) return state;
         return { currentSlide: state.currentSlide + 1}        
     }),
     previousSlide: () => set((state) => {
