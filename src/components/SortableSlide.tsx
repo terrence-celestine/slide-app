@@ -4,6 +4,7 @@ import type { Slide } from "../types/slide"
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { useState } from "react"
+import SlideThumbnail from "./SlideThumbnail"
 
 const SortableSlide = ({ slide, index }: { slide: Slide, index: number }) => {
   const currentSlide = useSlideStore((state) => state.currentSlide)
@@ -38,12 +39,7 @@ const SortableSlide = ({ slide, index }: { slide: Slide, index: number }) => {
       }`}
     >
       {/* Thumbnail */}
-      <div
-        {...attributes}
-        {...listeners}
-        className="aspect-video w-full rounded-t-md cursor-grab"
-        style={{ background: slide.background }}
-      />
+      <SlideThumbnail slide={slide} />
 
       {/* Footer */}
       <div onClick={() => setCurrentSlide(index)} className="...">
