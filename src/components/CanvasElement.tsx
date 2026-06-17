@@ -47,8 +47,12 @@ const CanvasElement = ({element, canvasWidth, canvasHeight, readonly = false}: {
         bounds="parent"
       >
         <div style={{ width: '100%', height: '100%' }}
-       className={`${!readonly && selectedElementId === element.id ? 'border-2 border-blue-500 rounded-md' : ''} ${!readonly ? 'hover:border-2 hover:border-blue-500 hover:cursor-pointer' : ''} rounded-md`}
-        >
+              className={`border-2 rounded-md ${
+                selectedElementId === element.id 
+                  ? 'border-blue-500' 
+                  : 'border-transparent hover:border-blue-300'
+              }`}
+            >
             {element.type === 'text' && <TextElementComponent element={element} isEditing={isEditing} onTextChange={(text) => {updateElement(activeSlideId, element.id, { text }); setIsEditing(false)}} />}
             {element.type === 'image' && <ImageElementComponent element={element} onImageChange={(url) => updateElement(activeSlideId, element.id, { image: url })} />}
             {element.type === 'shape' && <ShapeElementComponent element={element} />}
