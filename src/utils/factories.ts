@@ -27,7 +27,8 @@ const createTextElement = (): TextElement => {
         fontFamily: 'Arial',
         fontWeight: 'normal',
         fontColor: '#000000',
-        textAlign: 'left'
+        textAlign: 'left',
+        fontStyle: 'normal'
     }
 }
 

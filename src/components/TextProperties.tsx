@@ -35,6 +35,28 @@ const TextProperties = ({ element }: { element: TextElement }) => {
       </div>
 
       <div>
+  <label className={label}>Font Style</label>
+  <div className="flex gap-1">
+    {[
+      { label: 'Normal', value: 'normal' },
+      { label: <em>Italic</em>, value: 'italic' },
+      { label: <span style={{ fontStyle: 'oblique' }}>Oblique</span>, value: 'oblique' },
+    ].map(({ label, value }) => (
+      <button
+        key={value}
+        onClick={() => updateElement(currentSlide, element.id, { fontStyle: value as 'normal' | 'italic' | 'oblique' })}
+        className={`flex-1 flex items-center justify-center py-1.5 rounded border text-xs cursor-pointer transition-colors ${
+          element.fontStyle === value
+            ? 'bg-blue-50 border-blue-400 text-blue-600'
+            : 'bg-white border-zinc-200 text-zinc-500 hover:bg-zinc-50'
+        }`}
+      >
+        {label}
+      </button>
+    ))}
+  </div>
+</div>
+      <div>
         <label className={label}>Font Weight</label>
         <select value={element.fontWeight}
           onChange={(e) => updateElement(currentSlide, element.id, { fontWeight: e.target.value })}

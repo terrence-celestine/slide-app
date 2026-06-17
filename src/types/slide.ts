@@ -16,6 +16,7 @@ type TextElement = BaseElement & {
     fontWeight: number | string;
     fontColor: string;
     textAlign: 'left' | 'center' | 'right';
+    fontStyle: 'normal' | 'italic' | 'oblique';
 }
 type ImageElement = BaseElement & {
     type: 'image';
