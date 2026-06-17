@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { Download, FileJson, FileText, ChevronDown } from 'lucide-react'
 import { useSlideStore } from '../stores/slideStore'
-import html2canvas from 'html2canvas'
 import jsPDF from 'jspdf'
 
 const ExportMenu = () => {
@@ -9,7 +8,6 @@ const ExportMenu = () => {
   const menuRef = useRef<HTMLDivElement>(null)
   const slides = useSlideStore((state) => state.slides)
   const presentationName = useSlideStore((state) => state.presentationName)
-  const setCurrentSlide = useSlideStore((state) => state.setCurrentSlide)
 
   // close on outside click
   useEffect(() => {

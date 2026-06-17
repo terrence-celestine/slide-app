@@ -11,7 +11,6 @@ const Toolbar = () => {
     const currentSlide = useSlideStore((state) => state.currentSlide)
     const undo = useStore(useSlideStore.temporal).undo;
     const redo = useStore(useSlideStore.temporal).redo;
-    const slides = useSlideStore((state) => state.slides)
     const loadPresentation = useSlideStore((state) => state.loadPresentation)
     const fileInputRef = useRef<HTMLInputElement>(null)
     const presentationName = useSlideStore((state) => state.presentationName)
