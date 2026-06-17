@@ -1,13 +1,14 @@
 import { Plus } from "lucide-react"
 import { useSlideStore } from "../stores/slideStore"
-import { createSlide } from "../utils/factories"
 import { DndContext, type DragEndEvent } from "@dnd-kit/core"
 import { SortableContext, arrayMove, verticalListSortingStrategy } from "@dnd-kit/sortable"
 import SortableSlide from "./SortableSlide"
+import TemplateModal from "./TemplateModal"
+import { useState } from "react"
 
 const SlidePanel = () => {
+  const [showTemplateModal, setShowTemplateModal] = useState(false)
   const slides = useSlideStore(state => state.slides)
-  const addSlide = useSlideStore((state) => state.addSlide)
   const reorderSlides = useSlideStore((state) => state.reorderSlides)
 
   const handleDragEnd = (event: DragEndEvent) => {
@@ -23,7 +24,7 @@ const SlidePanel = () => {
       <div className="flex items-center justify-between px-3 py-2 border-b border-zinc-200">
         <span className="text-[10px] font-semibold text-zinc-400 uppercase tracking-widest">Slides</span>
         <button
-          onClick={() => addSlide(createSlide())}
+         onClick={() => setShowTemplateModal(true)}
           className="p-1 rounded hover:bg-zinc-100 text-zinc-400 hover:text-zinc-700 transition-colors cursor-pointer"
           title="Add slide"
         >
@@ -40,6 +41,7 @@ const SlidePanel = () => {
           </SortableContext>
         </DndContext>
       </div>
+      {showTemplateModal && <TemplateModal onClose={() => setShowTemplateModal(false)} />}
     </div>
   )
 }
