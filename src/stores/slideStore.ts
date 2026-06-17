@@ -31,6 +31,8 @@ type SlideStore = {
     setPresentationMode: (mode: boolean) => void;
     duplicateSlide: (slideIndex: number) => void;
     duplicateElement: (slideIndex: number, elementId: string) => void;
+    editingElementId: string | null;
+    setEditingElementId: (id: string | null) => void;
 }
 
 export const useSlideStore = create(temporal<SlideStore>((set) => ({
@@ -168,7 +170,9 @@ export const useSlideStore = create(temporal<SlideStore>((set) => ({
             i === slideIndex ? { ...s, elements: [...s.elements, copy] } : s
           )
           return { slides: updatedSlides, selectedElementId: copy.id }
-        })
+        }),
+        editingElementId: null,
+        setEditingElementId: (id) => set({ editingElementId: id })
 }), {
   partialize: (state) => ({ slides: state.slides }) as unknown as SlideStore
 }))

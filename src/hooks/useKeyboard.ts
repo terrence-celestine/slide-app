@@ -12,6 +12,7 @@ const useKeyboard = () => {
   const updateElement = useSlideStore((state) => state.updateElement)
   const nextSlide = useSlideStore((state) => state.nextSlide)
   const slides = useSlideStore((state) => state.slides)
+  const setEditingElementId = useSlideStore((state) => state.setEditingElementId)
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -37,6 +38,15 @@ const useKeyboard = () => {
         setSelectedElementId(null)
       }
 
+      if (e.key === 'Enter' && selectedElementId) {
+        const activeSlide = slides[currentSlide]
+        const el = activeSlide?.elements.find(el => el.id === selectedElementId)
+        if (el?.type === 'text') {
+          e.preventDefault()
+          setEditingElementId(selectedElementId)
+        }
+      }
+      
       // if element selected — nudge it, otherwise navigate slides
       if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(e.key)) {
         e.preventDefault()

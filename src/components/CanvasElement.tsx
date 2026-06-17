@@ -4,14 +4,16 @@ import ImageElementComponent from "./elements/ImageElement";
 import ShapeElementComponent from "./elements/ShapeElement";
 import { Rnd } from "react-rnd";
 import { useSlideStore } from "../stores/slideStore";
-import { useState } from "react";
 
 const CanvasElement = ({element, canvasWidth, canvasHeight, readonly = false}: {element: SlideElement, canvasWidth: number, canvasHeight: number, readonly?: boolean}) => {
     const updateElement = useSlideStore((state) => state.updateElement);
     const activeSlideId = useSlideStore((state) => state.currentSlide);
-    const [isEditing, setIsEditing] = useState(false);
     const setSelectedElementId = useSlideStore((state) => state.setSelectedElementId)
     const selectedElementId = useSlideStore((state) => state.selectedElementId)  
+    const editingElementId = useSlideStore((state) => state.editingElementId)
+const setEditingElementId = useSlideStore((state) => state.setEditingElementId)
+const isEditing = editingElementId === element.id
+
     return (
         <Rnd
         style={{ height: "100%", overflow: "hidden", opacity: element.opacity }}
@@ -21,7 +23,7 @@ const CanvasElement = ({element, canvasWidth, canvasHeight, readonly = false}: {
         }}
         disableDragging={isEditing || readonly}
         enableResizing={readonly ? false : undefined }
-        onDoubleClick={() => setIsEditing(true)}
+        onDoubleClick={() => setEditingElementId(element.id)}
         onResizeStop={(_e, _direction, ref, _delta, position) => {
             updateElement(activeSlideId, element.id, {
               x: (position.x / canvasWidth) * 100,
@@ -53,7 +55,7 @@ const CanvasElement = ({element, canvasWidth, canvasHeight, readonly = false}: {
                   : 'border-transparent hover:border-blue-300'
               }`}
             >
-            {element.type === 'text' && <TextElementComponent element={element} isEditing={isEditing} onTextChange={(text) => {updateElement(activeSlideId, element.id, { text }); setIsEditing(false)}} />}
+            {element.type === 'text' && <TextElementComponent element={element} isEditing={isEditing} onTextChange={(text) => { updateElement(activeSlideId, element.id, { text }); setEditingElementId(null);}}/>}
             {element.type === 'image' && <ImageElementComponent element={element} onImageChange={(url) => updateElement(activeSlideId, element.id, { image: url })} />}
             {element.type === 'shape' && <ShapeElementComponent element={element} />}
         </div>
