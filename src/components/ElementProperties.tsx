@@ -2,13 +2,15 @@ import { useSlideStore } from "../stores/slideStore"
 import type { SlideElement } from "../types/slide"
 import TextProperties from "./TextProperties"
 import ShapeProperties from "./ShapeProperties"
-import { Trash2, BringToFront, SendToBack, MoveUp, MoveDown } from "lucide-react"
+import { Trash2, BringToFront, SendToBack, MoveUp, MoveDown, Copy } from "lucide-react"
 
 const ElementProperties = ({ element }: { element: SlideElement }) => {
   const updateElementZIndex = useSlideStore((state) => state.updateElementZIndex)
   const deleteElement = useSlideStore((state) => state.deleteElement)
   const currentSlide = useSlideStore((state) => state.currentSlide)
-
+  const duplicateElement = useSlideStore((state) => state.duplicateElement)
+  const updateElement = useSlideStore((state) => state.updateElement)
+  
   return (
     <div className="flex flex-col gap-4">
 
@@ -55,7 +57,25 @@ const ElementProperties = ({ element }: { element: SlideElement }) => {
           ))}
         </div>
       </div>
-
+      <div>
+        <label className="text-[10px] font-semibold text-zinc-400 uppercase tracking-widest mb-2">Opacity — {Math.round(element.opacity * 100)}%</label>
+        <input
+          type="range"
+          min={0}
+          max={1}
+          step={0.01}
+          value={element.opacity}
+          onChange={(e) => updateElement(currentSlide, element.id, { opacity: Number(e.target.value) })}
+          className="w-full accent-blue-500 cursor-pointer"
+        />
+      </div>
+      <button
+        onClick={() => duplicateElement(currentSlide, element.id)}
+        className="flex items-center gap-2 px-3 py-1.5 rounded-md border border-zinc-200 text-zinc-600 hover:bg-zinc-50 text-xs transition-colors cursor-pointer w-full justify-center"
+      >
+        <Copy size={12} />
+        Duplicate element
+      </button>
       {/* Delete */}
       <div className="pt-1 border-t border-zinc-100">
         <button

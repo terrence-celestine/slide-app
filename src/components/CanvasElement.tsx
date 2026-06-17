@@ -14,7 +14,7 @@ const CanvasElement = ({element, canvasWidth, canvasHeight, readonly = false}: {
     const selectedElementId = useSlideStore((state) => state.selectedElementId)  
     return (
         <Rnd
-        style={{ height: "100%", overflow: "hidden" }}
+        style={{ height: "100%", overflow: "hidden", opacity: element.opacity }}
         onClick={(e: React.MouseEvent<HTMLDivElement>) => {
             e.stopPropagation()
             setSelectedElementId(element.id)

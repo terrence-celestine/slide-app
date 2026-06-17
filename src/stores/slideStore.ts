@@ -30,6 +30,7 @@ type SlideStore = {
     presentationMode: boolean;
     setPresentationMode: (mode: boolean) => void;
     duplicateSlide: (slideIndex: number) => void;
+    duplicateElement: (slideIndex: number, elementId: string) => void;
 }
 
 export const useSlideStore = create(temporal<SlideStore>((set) => ({
@@ -37,11 +38,13 @@ export const useSlideStore = create(temporal<SlideStore>((set) => ({
     currentSlide:0,
     addSlide: (slide: Slide) => set((state) => ({ slides: [...state.slides, slide]})),
     removeSlide: (index: number) => set((state) => {
-        if (state.slides.length <= 1) return state;
-        if (index >= 0 && index < state.slides.length) {
-            return { slides: state.slides.filter((_, i) => i !== index)}
-        }
-        return state;
+      if (state.slides.length <= 1) return state;
+      if (index >= 0 && index < state.slides.length) {
+        const slides = state.slides.filter((_, i) => i !== index)
+        const currentSlide = index >= slides.length ? slides.length - 1 : index
+        return { slides, currentSlide }
+      }
+      return state;
     }),
     updateSlide: (index: number, slide: Slide) => set((state) => {
         if (index >= 0 && index < state.slides.length) {
@@ -149,6 +152,22 @@ export const useSlideStore = create(temporal<SlideStore>((set) => ({
             ...state.slides.slice(index + 1)
           ]
           return { slides, currentSlide: index + 1 }
+        }),
+        duplicateElement: (slideIndex, elementId) => set((state) => {
+          const slide = state.slides[slideIndex]
+          if (!slide) return state
+          const element = slide.elements.find(el => el.id === elementId)
+          if (!element) return state
+          const copy = {
+            ...element,
+            id: nanoid(),
+            x: element.x + 3,
+            y: element.y + 3,
+          }
+          const updatedSlides = state.slides.map((s, i) =>
+            i === slideIndex ? { ...s, elements: [...s.elements, copy] } : s
+          )
+          return { slides: updatedSlides, selectedElementId: copy.id }
         })
 }), {
   partialize: (state) => ({ slides: state.slides }) as unknown as SlideStore

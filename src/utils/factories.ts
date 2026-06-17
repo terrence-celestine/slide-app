@@ -6,7 +6,7 @@ const randomOffset = () => Math.floor(Math.random() * 10)
 const createSlide = (): Slide => {
     return {
         id: nanoid(),
-        elements: [createTextElement()],
+        elements: [],
         background: '#FFFFFF',
         name: 'Untitled Slide'
     }
