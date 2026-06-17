@@ -16,6 +16,8 @@ const Toolbar = () => {
     const presentationName = useSlideStore((state) => state.presentationName)
     const setPresentationName = useSlideStore((state) => state.setPresentationName)
     const setPresentationMode = useSlideStore((state) => state.setPresentationMode)
+    const transitionType = useSlideStore((state) => state.transitionType)
+    const setTransitionType = useSlideStore((state) => state.setTransitionType)
 
     const exportJSON = () => {
       const json = JSON.stringify(slides, null, 2)
@@ -94,6 +96,16 @@ const Toolbar = () => {
             <Redo2 size={14} />
           </button>
           <div className="w-px h-5 bg-zinc-200 mx-1" />
+
+          <select
+            value={transitionType}
+            onChange={(e) => setTransitionType(e.target.value as 'none' | 'fade' | 'slide')}
+            className="text-xs border border-zinc-200 rounded px-2 py-1 text-zinc-600 focus:outline-none cursor-pointer"
+          >
+            <option value="none">No transition</option>
+            <option value="fade">Fade</option>
+            <option value="slide">Slide</option>
+          </select>
 
           <input
             type="text"

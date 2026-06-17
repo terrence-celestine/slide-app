@@ -35,6 +35,8 @@ type SlideStore = {
     setEditingElementId: (id: string | null) => void;
     contextMenu: { x: number; y: number; elementId: string } | null
     setContextMenu: (menu: { x: number; y: number; elementId: string } | null) => void
+    transitionType: 'none' | 'fade' | 'slide'
+    setTransitionType: (type: 'none' | 'fade' | 'slide') => void
 }
 
 export const useSlideStore = create(temporal<SlideStore>((set) => ({
@@ -176,7 +178,9 @@ export const useSlideStore = create(temporal<SlideStore>((set) => ({
         editingElementId: null,
         setEditingElementId: (id) => set({ editingElementId: id }),
         contextMenu: null,
-        setContextMenu: (menu) => set({ contextMenu: menu })
+        setContextMenu: (menu) => set({ contextMenu: menu }),
+        transitionType: 'fade',
+        setTransitionType: (type) => set({ transitionType: type }),
 }), {
   partialize: (state) => ({ slides: state.slides }) as unknown as SlideStore
 }))
