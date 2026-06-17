@@ -1,4 +1,4 @@
-import { Trash2 } from "lucide-react"
+import { Copy, Trash2 } from "lucide-react"
 import { useSlideStore } from "../stores/slideStore"
 import type { Slide } from "../types/slide"
 import { useSortable } from '@dnd-kit/sortable'
@@ -13,6 +13,7 @@ const SortableSlide = ({ slide, index }: { slide: Slide, index: number }) => {
   const [editing, setEditing] = useState(false)
   const isActive = index === currentSlide
   const updateSlide = useSlideStore((state) => state.updateSlide)
+  const duplicateSlide = useSlideStore((state) => state.duplicateSlide)
 
   const handleUpdateSlideName = (index: number, name: string) => {
     if (name.trim() === '') {
@@ -76,6 +77,12 @@ const SortableSlide = ({ slide, index }: { slide: Slide, index: number }) => {
         className="absolute top-1 right-1 p-0.5 rounded bg-white/80 shadow-sm opacity-0 group-hover:opacity-100 transition-opacity text-zinc-400 hover:text-red-500 cursor-pointer"
       >
         <Trash2 size={10} />
+      </button>
+      <button
+        onClick={(e) => { e.stopPropagation(); duplicateSlide(index) }}
+        className="absolute top-1 left-1 p-0.5 rounded bg-white/80 shadow-sm opacity-0 group-hover:opacity-100 transition-opacity text-zinc-400 hover:text-blue-500 cursor-pointer"
+      >
+        <Copy size={10} />
       </button>
     </div>
   )

@@ -1,5 +1,6 @@
 import { useSlideStore } from '../stores/slideStore'
 import type { TextElement } from '../types/slide'
+import { AlignLeft, AlignCenter, AlignRight } from 'lucide-react'
 
 const label = "text-[10px] font-semibold text-zinc-400 uppercase tracking-widest mb-1 block"
 const input = "w-full bg-white border border-zinc-200 rounded px-2 py-1.5 text-xs text-zinc-800 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
@@ -52,6 +53,28 @@ const TextProperties = ({ element }: { element: TextElement }) => {
           <span className="text-xs text-zinc-500 font-mono">{element.fontColor}</span>
         </div>
       </div>
+      <div>
+  <label className={label}>Alignment</label>
+  <div className="flex gap-1">
+    {[
+      { icon: <AlignLeft size={13} />, value: 'left' },
+      { icon: <AlignCenter size={13} />, value: 'center' },
+      { icon: <AlignRight size={13} />, value: 'right' },
+    ].map(({ icon, value }) => (
+      <button
+        key={value}
+        onClick={() => updateElement(currentSlide, element.id, { textAlign: value as 'left' | 'center' | 'right' })}
+        className={`flex-1 flex items-center justify-center py-1.5 rounded border text-xs transition-colors cursor-pointer
+          ${element.textAlign === value
+            ? 'bg-blue-50 border-blue-400 text-blue-600'
+            : 'bg-white border-zinc-200 text-zinc-500 hover:bg-zinc-50'
+          }`}
+      >
+        {icon}
+      </button>
+    ))}
+  </div>
+</div>
     </div>
   )
 }

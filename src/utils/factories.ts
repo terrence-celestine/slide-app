@@ -17,7 +17,7 @@ const createTextElement = (): TextElement => {
         id: nanoid(),
         x: 25 + randomOffset(),
         y: 25 + randomOffset(),
-        width: 10,
+        width: 30,
         height: 10,
         zIndex: 0,
         opacity: 1,
@@ -26,7 +26,8 @@ const createTextElement = (): TextElement => {
         fontSize: 16,
         fontFamily: 'Arial',
         fontWeight: 'normal',
-        fontColor: '#000000'
+        fontColor: '#000000',
+        textAlign: 'left'
     }
 }
 

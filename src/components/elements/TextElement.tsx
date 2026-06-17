@@ -21,7 +21,8 @@ const TextElementComponent = ({element, isEditing, onTextChange}: {element: Text
     fontWeight: element.fontWeight,
     width: '100%',
     height: '100%',
-    cursor: isEditing ? 'text' : 'default'
+    cursor: isEditing ? 'text' : 'default',
+    textAlign: element.textAlign
   }}
   ref={divRef}
   onBlur={(e) => onTextChange(e.currentTarget.innerText)}

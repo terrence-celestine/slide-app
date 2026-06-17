@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import type { Slide, SlideElement } from '../types/slide';
 import { createSlide } from '../utils/factories';
 import { temporal } from 'zundo'
+import { nanoid } from 'nanoid';
 
 type SlideStore = {
     slides: Slide[];
@@ -28,6 +29,7 @@ type SlideStore = {
     updateSlideNotes: (slideIndex: number, notes: string) => void;
     presentationMode: boolean;
     setPresentationMode: (mode: boolean) => void;
+    duplicateSlide: (slideIndex: number) => void;
 }
 
 export const useSlideStore = create(temporal<SlideStore>((set) => ({
@@ -131,7 +133,23 @@ export const useSlideStore = create(temporal<SlideStore>((set) => ({
           return { slides: updatedSlides }
         }),
         presentationMode: false,
-        setPresentationMode: (mode: boolean) => set({ presentationMode: mode })
+        setPresentationMode: (mode: boolean) => set({ presentationMode: mode }),
+        duplicateSlide: (index) => set((state) => {
+          if (index < 0 || index >= state.slides.length) return state
+          const original = state.slides[index]
+          const copy = {
+            ...original,
+            id: nanoid(),
+            name: `${original.name} (copy)`,
+            elements: original.elements.map((el) => ({ ...el, id: nanoid() }))
+          }
+          const slides = [
+            ...state.slides.slice(0, index + 1),
+            copy,
+            ...state.slides.slice(index + 1)
+          ]
+          return { slides, currentSlide: index + 1 }
+        })
 }), {
   partialize: (state) => ({ slides: state.slides }) as unknown as SlideStore
 }))
