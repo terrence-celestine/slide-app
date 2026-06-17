@@ -119,18 +119,18 @@ export const useSlideStore = create(temporal<SlideStore>((set) => ({
         })
         return { slides: updatedSlides }
       }),
-        loadFromLocalStorage: () => set(() => {
-          try {
-            const raw = localStorage.getItem('slideforge_slides')
-            if (!raw) return {}
-            const slides = JSON.parse(raw)
-            if (!Array.isArray(slides) || slides.length === 0) return {}
-            return { slides }
-          } catch (e) {
-            console.error('failed to load from localStorage', e)
-            return {}
-          }
-        }),
+      loadFromLocalStorage: () => set(() => {
+        try {
+          const raw = localStorage.getItem('slideforge_slides')
+          if (!raw) return {}
+          const slides = JSON.parse(raw)
+          if (!Array.isArray(slides) || slides.length === 0) return {}
+          return { slides, currentSlide: 0 }  // add this
+        } catch (e) {
+          console.error('failed to load from localStorage', e)
+          return {}
+        }
+      }),
         loadPresentation: (slides: Slide[]) => set({ slides }),
         presentationName: 'Untitled Presentation',
         setPresentationName: (name: string) => set({ presentationName: name }),

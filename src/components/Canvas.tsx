@@ -21,6 +21,14 @@ const Canvas = () => {
 
   useEffect(() => {
     if (!activeSlide) return
+    if (transitionType === 'none' || true) {
+      setDisplaySlide(activeSlide)
+      return
+    }
+  }, [activeSlide]) // keep content in sync without animation
+  
+  useEffect(() => {
+    if (!activeSlide) return
     if (transitionType === 'none') {
       setDisplaySlide(activeSlide)
       return
@@ -31,7 +39,7 @@ const Canvas = () => {
       setAnimating(false)
     }, 150)
     return () => clearTimeout(timer)
-  }, [currentSlide])
+  }, [currentSlide]) // only animate on slide change
 
   const animationClass = () => {
     if (transitionType === 'none') return ''

@@ -25,7 +25,7 @@ const App = () => {
     return <PresentationView />
   }
     return (
-      <div className="h-screen w-screen flex flex-col bg-[#1a1a2e] text-gray-200">
+      <div className="h-screen w-screen flex flex-col bg-zinc-100">
         <Toolbar />
         <div className="flex flex-1 overflow-hidden justify-between">
           <SlidePanel />   
