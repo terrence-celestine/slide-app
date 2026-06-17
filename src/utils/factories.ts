@@ -28,7 +28,8 @@ const createTextElement = (): TextElement => {
         fontWeight: 'normal',
         fontColor: '#000000',
         textAlign: 'left',
-        fontStyle: 'normal'
+        fontStyle: 'normal',
+        locked: false
     }
 }
 
@@ -42,7 +43,8 @@ const createImageElement = (): ImageElement => {
         zIndex: 0,
         opacity: 1,
         type: 'image',
-        image: ''
+        image: '',
+        locked: false
     }
 }
 
@@ -57,7 +59,8 @@ const createShapeElement = (): ShapeElement => {
         opacity: 1,
         type: 'shape',
         shape: 'rectangle',
-        shapeColor: '#000000'
+        shapeColor: '#000000',
+        locked: false
     }
 }
 

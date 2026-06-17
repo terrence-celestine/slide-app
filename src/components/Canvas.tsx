@@ -19,27 +19,30 @@ const Canvas = () => {
   const [displaySlide, setDisplaySlide] = useState(activeSlide)
   const [animating, setAnimating] = useState(false)
 
-  useEffect(() => {
-    if (!activeSlide) return
-    if (transitionType === 'none' || true) {
-      setDisplaySlide(activeSlide)
-      return
-    }
-  }, [activeSlide]) // keep content in sync without animation
+  // single effect — handles both content sync and transitions
+useEffect(() => {
+  if (!activeSlide) return
   
-  useEffect(() => {
-    if (!activeSlide) return
-    if (transitionType === 'none') {
-      setDisplaySlide(activeSlide)
-      return
-    }
-    setAnimating(true)
-    const timer = setTimeout(() => {
-      setDisplaySlide(activeSlide)
-      setAnimating(false)
-    }, 150)
-    return () => clearTimeout(timer)
-  }, [currentSlide]) // only animate on slide change
+  if (transitionType === 'none') {
+    setDisplaySlide(activeSlide)
+    return
+  }
+
+  // only animate when switching slides, not when content changes
+  setAnimating(true)
+  const timer = setTimeout(() => {
+    setDisplaySlide(activeSlide)
+    setAnimating(false)
+  }, 150)
+  return () => clearTimeout(timer)
+}, [currentSlide]) // only fires on slide switch
+
+// separate effect just for content updates (no animation)
+useEffect(() => {
+  if (!animating && activeSlide) {
+    setDisplaySlide(activeSlide)
+  }
+}, [activeSlide, animating])
 
   const animationClass = () => {
     if (transitionType === 'none') return ''
@@ -63,7 +66,7 @@ const Canvas = () => {
             transformOrigin: 'center center',
             background: displaySlide.background
           }}
-          className={`border-2 border-gray-300 transition-all duration-150 ${animationClass()}`}
+          className={`border-2 border-gray-300 transition-all duration-150 slide-canvas ${animationClass()}`}
         >
           {[...displaySlide.elements]
             .sort((a, b) => a.zIndex - b.zIndex)

@@ -2,7 +2,7 @@ import { useSlideStore } from "../stores/slideStore"
 import type { SlideElement } from "../types/slide"
 import TextProperties from "./TextProperties"
 import ShapeProperties from "./ShapeProperties"
-import { Trash2, BringToFront, SendToBack, MoveUp, MoveDown, Copy } from "lucide-react"
+import { Trash2, BringToFront, SendToBack, MoveUp, MoveDown, Copy, Lock } from "lucide-react"
 
 const ElementProperties = ({ element }: { element: SlideElement }) => {
   const updateElementZIndex = useSlideStore((state) => state.updateElementZIndex)
@@ -84,6 +84,13 @@ const ElementProperties = ({ element }: { element: SlideElement }) => {
         >
           <Trash2 size={12} />
           Delete element
+        </button>
+        <button
+          onClick={() => updateElement(currentSlide, element.id, { locked: !element.locked })}
+          className="flex items-center gap-2 px-3 py-1.5 rounded-md border border-zinc-200 text-zinc-600 hover:bg-zinc-50 text-xs transition-colors cursor-pointer w-full justify-center"
+        >
+          <Lock size={12} />
+          {element.locked ? 'Unlock element' : 'Lock element'}
         </button>
       </div>
     </div>

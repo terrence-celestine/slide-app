@@ -28,8 +28,8 @@ const CanvasElement = ({element, canvasWidth, canvasHeight, readonly = false}: {
             e.stopPropagation()
             setSelectedElementId(element.id)
         }}
-        disableDragging={isEditing || readonly}
-        enableResizing={readonly ? false : undefined }
+        disableDragging={isEditing || readonly || element.locked}
+        enableResizing={readonly || element.locked ? false : undefined }
         onDoubleClick={() => setEditingElementId(element.id)}
         onResizeStop={(_e, _direction, ref, _delta, position) => {
             updateElement(activeSlideId, element.id, {
@@ -57,9 +57,11 @@ const CanvasElement = ({element, canvasWidth, canvasHeight, readonly = false}: {
       >
         <div style={{ width: '100%', height: '100%' }}
               className={`border-2 rounded-md ${
-                selectedElementId === element.id 
-                  ? 'border-blue-500' 
-                  : 'border-transparent hover:border-blue-300'
+                element.locked 
+                  ? 'border-orange-300' 
+                  : selectedElementId === element.id 
+                    ? 'border-blue-500' 
+                    : 'border-transparent hover:border-blue-300'
               }`}
             >
             {element.type === 'text' && <TextElementComponent element={element} isEditing={isEditing} onTextChange={(text) => { updateElement(activeSlideId, element.id, { text }); setEditingElementId(null);}}/>}

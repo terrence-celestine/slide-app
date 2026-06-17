@@ -6,6 +6,7 @@ type BaseElement = {
     height: number
     zIndex: number
     opacity: number
+    locked: boolean
   }
 
 type TextElement = BaseElement & {

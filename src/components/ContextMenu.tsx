@@ -1,5 +1,5 @@
 import { useSlideStore } from '../stores/slideStore'
-import { Copy, Trash2, BringToFront, SendToBack, MoveUp, MoveDown } from 'lucide-react'
+import { Copy, Trash2, BringToFront, SendToBack, MoveUp, MoveDown, Lock, LockOpen } from 'lucide-react'
 import { useEffect, useRef } from 'react'
 
 const ContextMenu = () => {
@@ -10,6 +10,9 @@ const ContextMenu = () => {
   const updateElementZIndex = useSlideStore((state) => state.updateElementZIndex)
   const currentSlide = useSlideStore((state) => state.currentSlide)
   const menuRef = useRef<HTMLDivElement>(null)
+  const updateElement = useSlideStore((state) => state.updateElement)
+const slides = useSlideStore((state) => state.slides)
+const currentSlideIndex = useSlideStore((state) => state.currentSlide)
 
   // close on click outside
   useEffect(() => {
@@ -25,6 +28,10 @@ const ContextMenu = () => {
   if (!contextMenu) return null
 
   const { x, y, elementId } = contextMenu
+
+  
+  const activeSlide = slides[currentSlideIndex]
+  const element = activeSlide?.elements.find(el => el.id === elementId)
 
   const action = (fn: () => void) => {
     fn()
@@ -75,6 +82,13 @@ const ContextMenu = () => {
         <Trash2 size={12} />
         Delete
       </button>
+      <button
+        onClick={() => action(() => updateElement(currentSlide, elementId, { locked: !element?.locked }))}
+        className="flex items-center gap-2 px-3 py-1.5 text-xs text-zinc-700 hover:bg-zinc-50 w-full text-left cursor-pointer"
+        >
+        {element?.locked ? <LockOpen size={12} /> : <Lock size={12} />}
+        {element?.locked ? 'Unlock' : 'Lock'}
+        </button>
     </div>
   )
 }

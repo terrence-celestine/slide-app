@@ -1,9 +1,10 @@
 import { useStore } from "zustand";
 import { useSlideStore } from "../stores/slideStore";
 import { createTextElement, createImageElement, createShapeElement } from "../utils/factories";
-import { Type, Image, Shapes, Undo2, Redo2, Download, MonitorPlay, Play } from "lucide-react";
+import { Type, Image, Shapes, Undo2, Redo2, MonitorPlay, Play } from "lucide-react";
 import { useRef } from "react"
 import { Upload } from "lucide-react"
+import ExportMenu from "./ExportMenu";
 
 const Toolbar = () => {
     const addElement = useSlideStore((state) => state.addElement)
@@ -18,17 +19,6 @@ const Toolbar = () => {
     const setPresentationMode = useSlideStore((state) => state.setPresentationMode)
     const transitionType = useSlideStore((state) => state.transitionType)
     const setTransitionType = useSlideStore((state) => state.setTransitionType)
-
-    const exportJSON = () => {
-      const json = JSON.stringify(slides, null, 2)
-      const blob = new Blob([json], { type: 'application/json' })
-      const url = URL.createObjectURL(blob)
-      const a = document.createElement('a')
-      a.href = url
-      a.download = `${presentationName}.json`
-      a.click()
-      URL.revokeObjectURL(url)
-    }
 
     const loadJSON = (e: React.ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0]
@@ -135,11 +125,7 @@ const Toolbar = () => {
           <Upload size={13} />
           Load
         </button>
-          <button onClick={exportJSON}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium transition-colors cursor-pointer">
-            <Download size={13} />
-            Export
-          </button>
+        <ExportMenu />
           </div>
         </div>
       </div>
