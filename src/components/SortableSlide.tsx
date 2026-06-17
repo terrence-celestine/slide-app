@@ -39,10 +39,12 @@ const SortableSlide = ({ slide, index }: { slide: Slide, index: number }) => {
       }`}
     >
       {/* Thumbnail */}
+      <div {...attributes} {...listeners} className="cursor-grab active:cursor-grabbing">
       <SlideThumbnail slide={slide} />
+      </div>
 
       {/* Footer */}
-      <div onClick={() => setCurrentSlide(index)} className="...">
+      <div onClick={() => setCurrentSlide(index)} className={`flex items-center px-1.5 py-1 rounded-b-md ${isActive ? 'bg-blue-50' : 'bg-zinc-50'}`}>
         {editing ? (
           <input
             autoFocus

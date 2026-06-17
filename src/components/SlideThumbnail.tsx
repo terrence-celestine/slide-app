@@ -1,4 +1,3 @@
-import { useMemo } from 'react'
 import type { Slide } from '../types/slide'
 import TextElementComponent from './elements/TextElement'
 import ImageElementComponent from './elements/ImageElement'
