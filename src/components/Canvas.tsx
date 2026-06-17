@@ -9,6 +9,8 @@ const Canvas = () => {
   const slides = useSlideStore((state) => state.slides);
   const setSelectedElementId = useSlideStore((state) => state.setSelectedElementId)
   const transitionType = useSlideStore((state) => state.transitionType)
+  const snapToGrid = useSlideStore((state) => state.snapToGrid)
+const gridSize = useSlideStore((state) => state.gridSize)
   const activeSlide = slides[currentSlide];
   const SLIDE_WIDTH = 960
   const SLIDE_HEIGHT = 540
@@ -68,6 +70,26 @@ useEffect(() => {
           }}
           className={`border-2 border-gray-300 transition-all duration-150 slide-canvas ${animationClass()}`}
         >
+          {snapToGrid && (
+            <svg
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                pointerEvents: 'none',
+                zIndex: 0
+              }}
+            >
+              <defs>
+                <pattern id="grid" width={gridSize} height={gridSize} patternUnits="userSpaceOnUse">
+                  <circle cx={gridSize / 2} cy={gridSize / 2} r={1} fill="#d1d5db" />
+                </pattern>
+              </defs>
+              <rect width="100%" height="100%" fill="url(#grid)" />
+            </svg>
+          )}
           {[...displaySlide.elements]
             .sort((a, b) => a.zIndex - b.zIndex)
             .map((element) => (

@@ -37,6 +37,10 @@ type SlideStore = {
     setContextMenu: (menu: { x: number; y: number; elementId: string } | null) => void
     transitionType: 'none' | 'fade' | 'slide'
     setTransitionType: (type: 'none' | 'fade' | 'slide') => void
+    snapToGrid: boolean
+    gridSize: number
+    setSnapToGrid: (v: boolean) => void
+    setGridSize: (size: number) => void
 }
 
 export const useSlideStore = create(temporal<SlideStore>((set) => ({
@@ -181,6 +185,10 @@ export const useSlideStore = create(temporal<SlideStore>((set) => ({
         setContextMenu: (menu) => set({ contextMenu: menu }),
         transitionType: 'fade',
         setTransitionType: (type) => set({ transitionType: type }),
+        snapToGrid: false,
+        gridSize: 10,
+        setSnapToGrid: (v) => set({ snapToGrid: v }),
+        setGridSize: (size) => set({ gridSize: size }),
 }), {
   partialize: (state) => ({ slides: state.slides }) as unknown as SlideStore
 }))

@@ -14,9 +14,13 @@ const CanvasElement = ({element, canvasWidth, canvasHeight, readonly = false}: {
     const setEditingElementId = useSlideStore((state) => state.setEditingElementId)
     const isEditing = editingElementId === element.id
     const setContextMenu = useSlideStore((state) => state.setContextMenu)
+    const snapToGrid = useSlideStore((state) => state.snapToGrid)
+    const gridSize = useSlideStore((state) => state.gridSize)
 
     return (
         <Rnd
+        dragGrid={snapToGrid ? [gridSize, gridSize] : [1, 1]}
+        resizeGrid={snapToGrid ? [gridSize, gridSize] : [1, 1]}
         onContextMenu={(e: React.MouseEvent<HTMLDivElement>) => {
             e.preventDefault()
             e.stopPropagation()

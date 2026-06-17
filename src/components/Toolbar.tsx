@@ -1,7 +1,7 @@
 import { useStore } from "zustand";
 import { useSlideStore } from "../stores/slideStore";
 import { createTextElement, createImageElement, createShapeElement } from "../utils/factories";
-import { Type, Image, Shapes, Undo2, Redo2, MonitorPlay, Play } from "lucide-react";
+import { Type, Image, Shapes, Undo2, Redo2, MonitorPlay, Play, Grid } from "lucide-react";
 import { useRef } from "react"
 import { Upload } from "lucide-react"
 import ExportMenu from "./ExportMenu";
@@ -18,6 +18,8 @@ const Toolbar = () => {
     const setPresentationMode = useSlideStore((state) => state.setPresentationMode)
     const transitionType = useSlideStore((state) => state.transitionType)
     const setTransitionType = useSlideStore((state) => state.setTransitionType)
+    const snapToGrid = useSlideStore((state) => state.snapToGrid)
+    const setSnapToGrid = useSlideStore((state) => state.setSnapToGrid)
 
     const loadJSON = (e: React.ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0]
@@ -95,7 +97,18 @@ const Toolbar = () => {
             <option value="fade">Fade</option>
             <option value="slide">Slide</option>
           </select>
-
+          <div className="w-px h-5 bg-zinc-200 mx-1" />
+          <button
+            onClick={() => setSnapToGrid(!snapToGrid)}
+            className={`flex items-center gap-1.5 px-2 py-1.5 rounded border text-xs transition-colors cursor-pointer ${
+              snapToGrid
+                ? 'bg-blue-50 border-blue-400 text-blue-600'
+                : 'bg-white border-zinc-200 text-zinc-500 hover:bg-zinc-50'
+            }`}
+          >
+            <Grid size={13} />
+            Snap
+          </button>
           <input
             type="text"
             value={presentationName}
