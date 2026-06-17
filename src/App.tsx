@@ -8,6 +8,7 @@ import useAutoSave from './hooks/useAutoSave'
 import { useSlideStore } from './stores/slideStore'
 import { useEffect } from 'react'
 import PresentationView from './components/PresentationView'
+import ContextMenu from './components/ContextMenu'
 
 const App = () => {
     const loadFromLocalStorage = useSlideStore((state) => state.loadFromLocalStorage)
@@ -31,6 +32,7 @@ const App = () => {
           <Canvas /> 
           <PropertiesPanel />
         </div>
+        <ContextMenu />
       </div>
     )
 }

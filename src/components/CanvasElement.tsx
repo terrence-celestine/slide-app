@@ -11,11 +11,18 @@ const CanvasElement = ({element, canvasWidth, canvasHeight, readonly = false}: {
     const setSelectedElementId = useSlideStore((state) => state.setSelectedElementId)
     const selectedElementId = useSlideStore((state) => state.selectedElementId)  
     const editingElementId = useSlideStore((state) => state.editingElementId)
-const setEditingElementId = useSlideStore((state) => state.setEditingElementId)
-const isEditing = editingElementId === element.id
+    const setEditingElementId = useSlideStore((state) => state.setEditingElementId)
+    const isEditing = editingElementId === element.id
+    const setContextMenu = useSlideStore((state) => state.setContextMenu)
 
     return (
         <Rnd
+        onContextMenu={(e: React.MouseEvent<HTMLDivElement>) => {
+            e.preventDefault()
+            e.stopPropagation()
+            setContextMenu({ x: e.clientX, y: e.clientY, elementId: element.id })
+            setSelectedElementId(element.id)
+        }}
         style={{ height: "100%", overflow: "hidden", opacity: element.opacity }}
         onClick={(e: React.MouseEvent<HTMLDivElement>) => {
             e.stopPropagation()
